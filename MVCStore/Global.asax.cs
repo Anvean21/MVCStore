@@ -1,4 +1,5 @@
-﻿using MVCStore.Util;
+﻿using Catel.Data;
+using MVCStore.Util;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
@@ -16,6 +17,9 @@ namespace MVCStore
     {
         protected void Application_Start()
         {
+            //Какая-то херня с Нинжектом, вылетает ошибка валидации некоторых полей, нашел в инете решение.
+            ModelValidatorProviders.Providers.Clear();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

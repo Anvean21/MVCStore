@@ -10,42 +10,16 @@ using System.Web.Mvc;
 namespace MVCStore.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class ProductControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void List()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            ProductController controller = new ProductController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            ViewResult result = controller.List() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

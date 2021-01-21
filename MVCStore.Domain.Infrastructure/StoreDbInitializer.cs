@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVCStore.Domain.Infrastructure
 {
-   public class StoreDbInitializer: DropCreateDatabaseAlways<StoreContext>
+   public class StoreDbInitializer: DropCreateDatabaseIfModelChanges<StoreContext>
     {
         protected override void Seed(StoreContext db)
         {
