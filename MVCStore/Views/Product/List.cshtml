@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MVCStore.Domain.Core.Product>
+﻿@using MVCStore.Models
+@using MVCStore.MvcHelpers
+@model ProductListViewModel
+@*@model IEnumerable<MVCStore.Domain.Core.Product>*@
 @{
     ViewBag.Title = "List";
 }
@@ -6,7 +9,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
+    @*<tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -20,9 +23,9 @@
             @Html.DisplayNameFor(model => model.Category)
         </th>
         <th></th>
-    </tr>
+    </tr>*@
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Products)
     {
         <tr>
             <td>
@@ -46,3 +49,6 @@
     }
 
 </table>
+<div>
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>

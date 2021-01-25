@@ -1,5 +1,7 @@
 ﻿using MVCStore.Domain.Core;
 using MVCStore.Domain.Infrastructure;
+using MVCStore.Models;
+using MVCStore.MvcHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +18,24 @@ namespace MVCStore.Controllers
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
         }
-        public ActionResult List()
+        public ActionResult List(int page = 1)
         {
-            return View(unitOfWork.Products.GetAll());
+            int pageSize = 3;
+            ProductListViewModel model = new ProductListViewModel
+            {
+                Products = unitOfWork.Products.GetAll()
+                    .OrderBy(p => p.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = unitOfWork.Products.GetAll().Count()
+                }
+            };
+            return View(model);
+            //return View(unitOfWork.Products.GetAll());
         }
         [HttpGet]
         public ActionResult Edit(int id)
