@@ -32,7 +32,9 @@ namespace MVCStore.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = unitOfWork.Products.GetAll().Count()
+                    TotalItems = category == null ?
+        unitOfWork.Products.GetAll().Count() :
+        unitOfWork.Products.GetAll().Where(cat => cat.Category.Name == category).Count()
                 },
                  CurrentCategory = category
             };
