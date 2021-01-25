@@ -18,12 +18,13 @@ namespace MVCStore.Controllers
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
         }
-        public ActionResult List(int page = 1)
+        public ActionResult List(string category,int page = 1)
         {
             int pageSize = 3;
             ProductListViewModel model = new ProductListViewModel
             {
                 Products = unitOfWork.Products.GetAll()
+                .Where(p => category == null || p.Category.Name.ToLower() == category.ToLower())
                     .OrderBy(p => p.Id)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize),
@@ -32,7 +33,8 @@ namespace MVCStore.Controllers
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
                     TotalItems = unitOfWork.Products.GetAll().Count()
-                }
+                },
+                 CurrentCategory = category
             };
             return View(model);
             //return View(unitOfWork.Products.GetAll());

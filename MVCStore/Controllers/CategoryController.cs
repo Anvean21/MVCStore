@@ -16,7 +16,17 @@ namespace MVCStore.Controllers
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
         }
+        public PartialViewResult Menu(string category = null)
+        {
+            ViewBag.SelectedCategory = category;
+            IEnumerable<string> categories = unitOfWork.Categories.GetAll()
+                .Where(x => x.Products.Count() != 0)
+                .Select(game => game.Name)
+                .Distinct()
+                .OrderBy(x => x);
 
+            return PartialView(categories);
+        }
         public ActionResult CategoriesList()
         {
             return View(unitOfWork.Categories.GetAll());

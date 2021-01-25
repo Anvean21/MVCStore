@@ -5,13 +5,17 @@
 @{
     ViewBag.Title = "List";
 }
+
+<h2>Products</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add new Product", "Create","Product", null,
+    new { @class = "btn btn-block btn-success btn-sm" })
 </p>
 <table class="table">
-    @*<tr>
+    
+   @*<tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -37,9 +41,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
+            </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
@@ -49,6 +53,7 @@
     }
 
 </table>
-<div>
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List",
+        new { page = x, category = Model.CurrentCategory }))
 </div>
