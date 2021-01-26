@@ -8,18 +8,15 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("Store", "List", "Product", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Category", "CategoriesList", "Category")</li>
-                </ul>
-            </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            @Html.ActionLink("Store", "List", "Product", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Category", "CategoriesList", "Category", new { @class = "navbar-brand" })
         </div>
+        @Html.Action("Summary", "Cart")
     </div>
+
     <div class="row panel">
         <div id="categories" class="col-xs-3">
             @Html.Action("Menu", "Category")

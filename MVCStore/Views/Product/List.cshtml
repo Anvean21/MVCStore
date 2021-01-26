@@ -16,16 +16,26 @@
 
 @foreach (var item in Model.Products)
 {
-    <div class="well">
-        <h3>
-            <strong>@item.Name</strong>
-            <span class="pull-right label label-info">@item.Price.ToString("# $")</span>
-        </h3>
-        <span class="lead">@item.Description</span>
-        <br />
-        @Html.ActionLink("Edit", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-        @Html.ActionLink("Delete", "Delete", "Product", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
-    </div>
+<div class="well">
+    <h3>
+        <strong>@item.Name</strong>
+        <span class="pull-right label label-info">@item.Price.ToString("# $")</span>
+    </h3>
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+<div class="pull-right">
+    @Html.Hidden("productId", item.Id)
+    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+    <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+   
+</div>
+    }
+  
+    <span class="lead">@item.Description</span>
+    <br />
+    @Html.ActionLink("Edit", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("Delete", "Delete", "Product", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+</div>
 
 
 }

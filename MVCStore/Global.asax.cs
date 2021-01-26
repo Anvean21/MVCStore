@@ -1,4 +1,6 @@
 ﻿using Catel.Data;
+using MVCStore.Domain.Core;
+using MVCStore.Infrastructure.Binders;
 using MVCStore.Util;
 using Ninject;
 using Ninject.Modules;
@@ -24,6 +26,9 @@ namespace MVCStore
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Биндим корзину
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
 
             NinjectModule registrations = new NinjectRegistration("DefaultConnection");
             var kernel = new StandardKernel(registrations);
