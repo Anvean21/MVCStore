@@ -19,8 +19,11 @@ namespace MVCStore
     {
         protected void Application_Start()
         {
+
             //Какая-то херня с Нинжектом, вылетает ошибка валидации некоторых полей, нашел в инете решение.
             ModelValidatorProviders.Providers.Clear();
+
+
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

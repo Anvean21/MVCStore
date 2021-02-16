@@ -18,11 +18,13 @@ namespace MVCStore.Domain.Infrastructure
         {
             db = new StoreContext(connectionString);
         }
+
+        //Singltone
         public IRepository<Product> Products
         {
             get
             {
-                if (productRepository== null)
+                if (productRepository == null)
                 {
                     productRepository = new ProductRepository(db);
                 }
