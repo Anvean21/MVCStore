@@ -56,13 +56,20 @@ namespace MVCStore.Controllers
         [HttpPost]
         public ActionResult Edit(Product product)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(product);
+            }
+            if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower()))
+            {
+                SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
+                ViewBag.Categories = categories;
+                ModelState.AddModelError("", $"Product Name {product.Name} already exist");
+                return View(product);
+            }
                 unitOfWork.Products.Update(product);
                 unitOfWork.Save();
                 return RedirectToAction("List");
-            }
-            return View(product);
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -82,13 +89,21 @@ namespace MVCStore.Controllers
         [HttpPost]
         public ActionResult Create(Product product)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                unitOfWork.Products.Create(product);
-                unitOfWork.Save();
-                return RedirectToAction("List");
+                return View(product);
             }
-            return View(product);
+            if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower()))
+            {
+                SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
+                ViewBag.Categories = categories;
+                ModelState.AddModelError("", $"Product Name {product.Name} already exist");
+                return View(product);
+            }
+            unitOfWork.Products.Create(product);
+            unitOfWork.Save();
+            return RedirectToAction("List");
+          
         }
     }
 }

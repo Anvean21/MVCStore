@@ -44,13 +44,13 @@ namespace MVCStore.Controllers
         [HttpPost]
         public ActionResult Edit(Category category)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(category);
+            }
                 unitOfWork.Categories.Update(category);
                 unitOfWork.Save();
                 return RedirectToAction("CategoriesList");
-            }
-            return View(category);
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -69,13 +69,19 @@ namespace MVCStore.Controllers
         [HttpPost]
         public ActionResult Create(Category category)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                unitOfWork.Categories.Create(category);
-                unitOfWork.Save();
-                return RedirectToAction("CategoriesList");
+                return View(category);
             }
-            return View(category);
+            if (unitOfWork.Categories.GetAll().Any(x => x.Name.ToLower() == category.Name.ToLower()))
+            {
+                ModelState.AddModelError("", $"Category *{category.Name}* already exist");
+                return View(category);
+            }
+
+            unitOfWork.Categories.Create(category);
+            unitOfWork.Save();
+            return RedirectToAction("CategoriesList");
         }
     }
 }
