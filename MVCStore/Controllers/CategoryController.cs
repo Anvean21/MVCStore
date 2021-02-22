@@ -48,10 +48,12 @@ namespace MVCStore.Controllers
             {
                 return View(category);
             }
-            if (unitOfWork.Categories.GetAll().Any(x => x.Name.ToLower() == category.Name.ToLower()))
+
+            if (unitOfWork.Categories.GetAll().Any(x => x.Name.ToLower() == category.Name.ToLower() && x.Id != category.Id))
             {
                 ModelState.AddModelError("", $"Category *{category.Name}* already exist");
                 return View(category);
+
             }
 
             unitOfWork.Categories.Update(category);

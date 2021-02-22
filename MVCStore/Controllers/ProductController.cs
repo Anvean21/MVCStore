@@ -18,7 +18,7 @@ namespace MVCStore.Controllers
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
         }
-        public ActionResult List(string category,int page = 1)
+        public ActionResult List(string category, int page = 1)
         {
             int pageSize = 3;
             ProductListViewModel model = new ProductListViewModel
@@ -36,7 +36,7 @@ namespace MVCStore.Controllers
         unitOfWork.Products.GetAll().Count() :
         unitOfWork.Products.GetAll().Where(cat => cat.Category.Name == category).Count()
                 },
-                 CurrentCategory = category
+                CurrentCategory = category
             };
             return View(model);
             //return View(unitOfWork.Products.GetAll());
@@ -47,7 +47,7 @@ namespace MVCStore.Controllers
             Product p = unitOfWork.Products.Get(id);
             SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
             ViewBag.Categories = categories;
-            if (p==null)
+            if (p == null)
             {
                 return HttpNotFound();
             }
@@ -60,16 +60,16 @@ namespace MVCStore.Controllers
             {
                 return View(product);
             }
-            //if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower()))
-            //{
-            //    SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
-            //    ViewBag.Categories = categories;
-            //    ModelState.AddModelError("", $"Product Name {product.Name} already exist");
-            //    return View(product);
-            //}
-                unitOfWork.Products.Update(product);
-                unitOfWork.Save();
-                return RedirectToAction("List");
+            if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower() && x.Id != product.Id))
+            {
+                SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
+                ViewBag.Categories = categories;
+                ModelState.AddModelError("", $"Product Name {product.Name} already exist");
+                return View(product);
+            }
+            unitOfWork.Products.Update(product);
+            unitOfWork.Save();
+            return RedirectToAction("List");
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -103,7 +103,7 @@ namespace MVCStore.Controllers
             unitOfWork.Products.Create(product);
             unitOfWork.Save();
             return RedirectToAction("List");
-          
+
         }
     }
 }

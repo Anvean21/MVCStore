@@ -37,7 +37,7 @@ namespace MVCStore.Domain.Infrastructure
 
         public IEnumerable<Category> GetAll()
         {
-            return db.Categories.ToList();
+            return db.Categories.AsNoTracking().ToList();
         }
 
         public void Update(Category item)

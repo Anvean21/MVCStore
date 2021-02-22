@@ -37,7 +37,7 @@ namespace MVCStore.Domain.Infrastructure
 
         public IEnumerable<Product> GetAll()
         {
-            return db.Products.ToList();
+            return db.Products.AsNoTracking().ToList();
         }
 
         public void Save()
