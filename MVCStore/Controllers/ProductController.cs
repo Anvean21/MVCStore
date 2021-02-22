@@ -60,13 +60,13 @@ namespace MVCStore.Controllers
             {
                 return View(product);
             }
-            if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower()))
-            {
-                SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
-                ViewBag.Categories = categories;
-                ModelState.AddModelError("", $"Product Name {product.Name} already exist");
-                return View(product);
-            }
+            //if (unitOfWork.Products.GetAll().Any(x => x.Name.ToLower() == product.Name.ToLower()))
+            //{
+            //    SelectList categories = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
+            //    ViewBag.Categories = categories;
+            //    ModelState.AddModelError("", $"Product Name {product.Name} already exist");
+            //    return View(product);
+            //}
                 unitOfWork.Products.Update(product);
                 unitOfWork.Save();
                 return RedirectToAction("List");

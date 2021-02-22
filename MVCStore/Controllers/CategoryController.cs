@@ -48,9 +48,15 @@ namespace MVCStore.Controllers
             {
                 return View(category);
             }
-                unitOfWork.Categories.Update(category);
-                unitOfWork.Save();
-                return RedirectToAction("CategoriesList");
+            if (unitOfWork.Categories.GetAll().Any(x => x.Name.ToLower() == category.Name.ToLower()))
+            {
+                ModelState.AddModelError("", $"Category *{category.Name}* already exist");
+                return View(category);
+            }
+
+            unitOfWork.Categories.Update(category);
+            unitOfWork.Save();
+            return RedirectToAction("CategoriesList");
         }
         [HttpGet]
         public ActionResult Delete(int id)
