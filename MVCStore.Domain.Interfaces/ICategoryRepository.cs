@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVCStore.Domain.Interfaces
 {
+    //Del
    public interface ICategoryRepository:IDisposable
     {
         IEnumerable<Category> GetCategories();

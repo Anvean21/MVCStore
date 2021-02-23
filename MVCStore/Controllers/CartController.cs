@@ -1,5 +1,6 @@
 ﻿using MVCStore.Domain.Core;
 using MVCStore.Domain.Infrastructure;
+using MVCStore.Domain.Interfaces;
 using MVCStore.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace MVCStore.Controllers
     public class CartController : Controller
     {
         EFUnitOfWork unitOfWork;
-
+       
         public CartController()
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");

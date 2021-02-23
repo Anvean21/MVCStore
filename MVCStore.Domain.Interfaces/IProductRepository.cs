@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVCStore.Domain.Interfaces
 {
+    //del
    public interface IProductRepository : IDisposable
     {
         IEnumerable<Product> GetProducts();

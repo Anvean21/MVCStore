@@ -14,11 +14,6 @@ namespace MVCStore.Controllers
     public class ProductController : Controller
     {
         EFUnitOfWork unitOfWork;
-        //IRepository<Product> repo;
-        //public ProductController(IRepository<Product> rep)
-        //{
-        //    repo = rep;
-        //}
         public ProductController()
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
