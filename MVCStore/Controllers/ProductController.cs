@@ -1,5 +1,6 @@
 ﻿using MVCStore.Domain.Core;
 using MVCStore.Domain.Infrastructure;
+using MVCStore.Domain.Interfaces;
 using MVCStore.Models;
 using MVCStore.MvcHelpers;
 using System;
@@ -13,11 +14,16 @@ namespace MVCStore.Controllers
     public class ProductController : Controller
     {
         EFUnitOfWork unitOfWork;
-
+        //IRepository<Product> repo;
+        //public ProductController(IRepository<Product> rep)
+        //{
+        //    repo = rep;
+        //}
         public ProductController()
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
         }
+       
         public ActionResult List(string category, int page = 1)
         {
             int pageSize = 3;
