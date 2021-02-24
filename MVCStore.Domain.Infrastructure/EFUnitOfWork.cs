@@ -45,7 +45,7 @@ namespace MVCStore.Domain.Infrastructure
         }
         public void Save()
         {
-            db.SaveChanges();
+            db.SaveChangesAsync();
         }
 
         private bool disposed = false;

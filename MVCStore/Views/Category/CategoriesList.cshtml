@@ -26,7 +26,14 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @if (item.Products.Count() == 0)
+                {
+                  @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+                else
+                {
+            <span>The category includes products.</span>
+                }
             </td>
         </tr>
     }
