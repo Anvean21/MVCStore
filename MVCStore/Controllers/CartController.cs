@@ -13,10 +13,11 @@ namespace MVCStore.Controllers
     public class CartController : Controller
     {
         EFUnitOfWork unitOfWork;
-       
-        public CartController()
+        private IOrderProcessor orderProcessor;
+        public CartController(IOrderProcessor processor)
         {
             unitOfWork = new EFUnitOfWork("DefaultConnection");
+            orderProcessor = processor;
         }
         public ViewResult Index(Cart cart, string returnUrl)
         {
@@ -58,6 +59,31 @@ namespace MVCStore.Controllers
         {
             return PartialView(cart);
         }
+
+        [HttpGet]
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
+        }
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
+        }
         //Этот метод больше не нужен, связыватель моделей делает всю работу.
         //public Cart GetCart()
         //{
@@ -69,5 +95,6 @@ namespace MVCStore.Controllers
         //    }
         //    return cart;
         //}
+
     }
 }

@@ -1,0 +1,62 @@
+﻿@model MVCStore.Domain.Core.ShippingDetails
+
+@{
+    ViewBag.Title = "GameStore: форма заказа";
+}
+
+<h2>Оформить заказ сейчас</h2>
+<p>Пожалуйста введи ваши контактные данные, и мы сразу отправим товар!</p>
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <h3>Данные</h3>
+    <div class="form-group">
+        <label>Ваше имя:</label>
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+        <br />
+        <label>Ваша фамилия:</label>
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })      
+        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+
+
+    </div>
+
+    <h3>Адрес доставки</h3>
+    <div class="form-group">
+        <label>Ваш город:</label>
+        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+
+    </div>
+    <div class="form-group">
+        <label>Индекс:</label>
+        @Html.TextBoxFor(x => x.PostalCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.PostalCode, "", new { @class = "text-danger" })
+
+    </div>
+    <div class="form-group">
+        <label>Ваш номер телефона:</label>
+        @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "text-danger" })
+
+    </div>
+    <div class="form-group">
+        <label>Ваш E-mail</label>
+        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+
+    </div>
+    <h3>Опции</h3>
+    <div class="checkbox">
+        <label>
+            @Html.EditorFor(x => x.CallBack)
+            Перезвонить вам для уточнения адреса доставки?
+        </label>
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Обработать заказ" />
+    </div>
+}
