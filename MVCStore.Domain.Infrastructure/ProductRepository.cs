@@ -40,11 +40,6 @@ namespace MVCStore.Domain.Infrastructure
             return db.Products.AsNoTracking().ToList();
         }
 
-        public void Save()
-        {
-            db.SaveChanges();
-        }
-
         public void Update(Product item)
         {
             db.Entry(item).State = System.Data.Entity.EntityState.Modified;
