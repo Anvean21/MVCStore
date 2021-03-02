@@ -66,11 +66,12 @@ namespace MVCStore.Controllers
             return View(new ShippingDetails());
         }
         [HttpPost]
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        public ActionResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {
             if (cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+                return RedirectToAction("List", "Product");
             }
 
             if (ModelState.IsValid)

@@ -20,7 +20,7 @@ namespace MVCStore.Domain.Infrastructure
         public string ServerName = "smtp.example.com";
         public int ServerPort = 587;
         public bool WriteAsFile = true;
-        public string FileLocation = @"D:\mvc_store_emails.txt";
+        public string FileLocation = @"D:\mvc_store_emails";
     }
 
     public class EmailOrderProcessor : IOrderProcessor
@@ -82,12 +82,16 @@ namespace MVCStore.Domain.Infrastructure
                                        "Новый заказ отправлен!",		// Тема
                                        body.ToString()); 				// Тело письма
 
+
+                //Декодирование body.
+                // http://base64.ru/
+                emailSettings.WriteAsFile = true;
                 if (emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }
-                //Проблема
-             //   smtpClient.Send(mailMessage);
+
+               smtpClient.Send(mailMessage);
             }
         }
     }
